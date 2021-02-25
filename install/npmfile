@@ -2,10 +2,11 @@ fkill-cli
 get-port-cli
 gtop
 nodemon
-npm
 npm-check
+npm-check-updates
 prettier
 release-it
+sort-package-json
 spot
 superstatic
 svgo
