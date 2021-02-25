@@ -1,6 +1,7 @@
 # .files
 
-These are my dotfiles. Take anything you want, but at your own risk.
+These are my dotfiles but forked from https://github.com/salimkayabasi/dotfiles
+Take anything you want, but at your own risk.
 
 It mainly targets macOS systems, but it works on at least Ubuntu as well.
 
@@ -13,7 +14,7 @@ It mainly targets macOS systems, but it works on at least Ubuntu as well.
 - Updated macOS defaults
 - Well-organized and easy to customize
 - The installation and runcom setup is
-  [tested weekly on real Ubuntu and macOS machines](https://github.com/webpro/dotfiles/actions) using
+  [tested weekly on real Ubuntu and macOS machines](https://github.com/salimkayabasi/dotfiles/actions) using
   [a GitHub Action](./.github/workflows/ci.yml)
 
 ## Packages Overview
@@ -40,7 +41,7 @@ The Xcode Command Line Tools includes `git` and `make` (not available on stock m
 1. Install this repo with `curl` available:
 
 ```bash
-bash -c "`curl -fsSL https://raw.githubusercontent.com/webpro/dotfiles/master/remote-install.sh`"
+bash -c "`curl -fsSL https://raw.githubusercontent.com/salimkayabasi/dotfiles/master/remote-install.sh`"
 ```
 
 This will clone or download, this repo to `~/.dotfiles` depending on the availability of `git`, `curl` or `wget`.
@@ -48,7 +49,7 @@ This will clone or download, this repo to `~/.dotfiles` depending on the availab
 1. Alternatively, clone manually into the desired location:
 
 ```bash
-git clone https://github.com/webpro/dotfiles.git ~/.dotfiles
+git clone https://github.com/salimkayabasi/dotfiles.git ~/.dotfiles
 ```
 
 Use the [Makefile](./Makefile) to install everything [listed above](#package-overview), and symlink [runcom](./runcom)
@@ -60,7 +61,7 @@ make
 ```
 
 The installation process in the Makefile is tested on every push and every week in this
-[GitHub Action](https://github.com/webpro/dotfiles/actions).
+[GitHub Action](https://github.com/salimkayabasi/dotfiles/actions).
 
 ## Post-Installation
 
@@ -97,7 +98,7 @@ Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`.
 
 ## Additional Resources
 
-- [Awesome Dotfiles](https://github.com/webpro/awesome-dotfiles)
+- [Awesome Dotfiles](https://github.com/salimkayabasi/awesome-dotfiles)
 - [Homebrew](https://brew.sh)
 - [Homebrew Cask](https://github.com/Homebrew/homebrew-cask)
 - [Bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
