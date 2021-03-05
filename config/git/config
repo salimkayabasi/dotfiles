@@ -1,16 +1,17 @@
 [user]
 	name = Salim KAYABASI
-	email = salim.kayaabsi@gmail.com
+	email = salim.kayabasi@gmail.com
 
 [github]
 	user = salimkayabasi
 
 [core]
 	excludesfile = ~/.config/git/ignore
-	editor = nano
+	editor = /Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl -n -w
 	filemode = false
 	trustctime = false
 	autocrlf = input
+	eol = lf
 	untrackedCache = true
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	ignorecase = false
@@ -32,17 +33,12 @@
 	prune = true
 
 [alias]
-	amend = commit --amend --reuse-message=HEAD
-	br = branch
 	ci = commit
-	co = checkout
-	contrib = shortlog --summary --numbered
 	cr = clone --recursive
 	df = diff --word-diff
 	g = grep --break --heading --line-number
 	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	ld = "!sh -c \"git log --since '${1:-1} days ago' --oneline --author $(git config user.email)\" -"
-	lg = log -p
 	ll = log --pretty=oneline --graph --abbrev-commit
 	lm = log --pretty=format:'* %s (%h)'
 	patch = !git --no-pager diff --no-color
@@ -50,10 +46,40 @@
 	pf = push --force
 	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 	show-ignored = "! git clean -ndX | perl -pe 's/Would remove/Ignored:/'"
-	st = status
 	stl = ls-files -m -o --exclude-standard
-	sts = status -sb
 	unstage = reset --hard HEAD
+	default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+	co = checkout
+	st = status -sb
+	ec = config --global -e
+	br = branch -vv
+	gr = grep -i
+	del = branch -D
+	rank = shortlog -sn --no-merges
+	ls = !git branch -r && git br
+	up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+	cob = checkout origin/HEAD -b
+	task = "!f(){ git checkout origin/HEAD -b WES-${1} && git status; };f"
+	cm = !git add -A && git commit -m
+	save = !git add -A && git commit -m 'SAVEPOINT'
+	undo = reset HEAD~1 --mixed
+	amend = commit -a --amend
+	track = branch -u origin/HEAD
+	ren = branch -m
+	wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+	bclean = "!f() { DEFAULT=$(git default); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
+	bdone = "!f() { DEFAULT=$(git default); git checkout ${1-$DEFAULT} && git up && git bclean ${1-$DEFAULT}; }; f"
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	cp = cherry-pick
+	lg = log --oneline
+	clog = "!f() { git log `git describe --tags --abbrev=0`..HEAD --pretty=format:' * %s (%an)' | grep -v 'Merge pull request';}; f"
+	# Commit changes to current head as amended commit
+	plus = commit --amend -a -C HEAD
+	# clean repository
+	crepo = filter-branch --tag-name-filter cat --index-filter 'git rm -r --cached --ignore-unmatch filename' --prune-empty -f -- --all
+	# tag version
+	addTag = "!f() { DEFAULT=$(git default); git co ${1-$DEFAULT} && git up && git tag -a v${1} -m "v${1}" && git tag;}; f"
+	delTag = "!f() { git tag -d v${1} && git push origin :refs/tags/v${1} && git tag;}; f"
 
 [diff]
 	renames = copies
@@ -66,6 +92,13 @@
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
 	path =
+
+[svn]
+	followparent = true
+[branch]
+	autosetuprebase = always
+[log]
+	date = relative
 
 [merge]
 	tool = Kaleidoscope
