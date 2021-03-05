@@ -1,15 +1,8 @@
 fkill-cli
-get-port-cli
 gtop
 nodemon
 npm-check
 npm-check-updates
-prettier
-release-it
 sort-package-json
 spot
-superstatic
-svgo
-tldr
-underscore-cli
-yarn
+@stoplight/spectral

@@ -8,7 +8,6 @@ alias rr="rm -rf"
 # Default options
 
 alias rsync="rsync -vh"
-alias json="json -c"
 alias psgrep="psgrep -i"
 
 # Global aliases
