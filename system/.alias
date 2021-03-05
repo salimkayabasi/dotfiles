@@ -1,8 +1,6 @@
 # Shortcuts
 
 alias reload="source ~/.bash_profile"
-alias _="sudo"
-alias g="git"
 alias rr="rm -rf"
 
 # Default options
@@ -39,21 +37,6 @@ alias ld="ls -ld $LS_COLORS */"
 alias lp="stat -c '%a %n' *"
 
 unset LS_COLORS LS_TIMESTYLEISO LS_GROUPDIRSFIRST
-
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias -- -="cd -"                  # Go to previous dir with -
-alias cd.='cd $(readlink -f .)'    # Go to real dir (i.e. if current dir is linked)
-
-# npm
-
-alias ni="npm install"
-alias nu="npm uninstall"
-alias nup="npm update"
-alias nri="rm -r node_modules && npm install"
-alias ncd="npm-check -su"
 
 # Network
 
