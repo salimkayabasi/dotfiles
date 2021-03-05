@@ -28,14 +28,10 @@ for DOTFILE in "$DOTFILES_DIR"/system/.{function,function_*,path,env,alias,grep,
 done
 
 if is-macos; then
-  for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias,function,path}.macos; do
+  for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias,path}.macos; do
     [ -f "$DOTFILE" ] && . "$DOTFILE"
   done
 fi
-
-# Set LSCOLORS
-
-eval "$(dircolors -b "$DOTFILES_DIR"/system/.dir_colors)"
 
 # Hook for extra/custom stuff
 
