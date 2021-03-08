@@ -47,3 +47,9 @@ jobs:
       - name: Run tests
         if: startsWith(matrix.os, 'macos')
         run: make test
+
+      - name: dotfiles
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          bin/dotfiles dock
+          bin/dotfiles macos
