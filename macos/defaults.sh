@@ -19,7 +19,7 @@ sudo scutil --set LocalHostName "$COMPUTER_NAME"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
 
 # Set language and text formats
-defaults write NSGlobalDomain AppleLanguages -array "en" "nl"
+defaults write NSGlobalDomain AppleLanguages -array "en"
 defaults write NSGlobalDomain AppleLocale -string "en_US@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
@@ -76,6 +76,12 @@ sudo systemsetup -setrestartfreeze on
 
 # Disable Notification Center and remove the menu bar icon
 launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
+
+# When enabled, the clock indicator (which by default is the colon) will flash on and off each second.
+defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
+
+# This setting configures the time and date format for the menubar digital clock.
+defaults write com.apple.menuextra.clock DateFormat -string "EEE d MMM HH:mm:ss"
 
 ###############################################################################
 # Keyboard & Input                                                            #
@@ -204,7 +210,7 @@ defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Disable the warning before emptying the Trash
-defaults write com.apple.finder WarnOnEmptyTrash -bool false
+#defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
 # Expand the following File Info panes:
 # “General”, “Open with”, and “Sharing & Permissions”
@@ -256,7 +262,7 @@ defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 
 # Disable automatic spell checking
-defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
+#defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
 
 # Disable sound for incoming mail
 defaults write com.apple.mail MailSound -string ""
@@ -296,7 +302,7 @@ defaults write com.apple.iCal "first day of week" -int 1
 # Disable Spotlight indexing for any volume that gets mounted and has not yet
 # been indexed before.
 # Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+#sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes" || true
 # Change indexing order and disable some file types
 defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
