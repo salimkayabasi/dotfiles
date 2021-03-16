@@ -13,8 +13,13 @@
 	autocrlf = input
 	eol = lf
 	untrackedCache = true
-	pager = diff-so-fancy | less --tabs=4 -RFX
 	ignorecase = false
+
+[color]
+	ui = auto
+  diff = auto
+  status = auto
+  branch = auto
 
 [credential]
 	helper = osxkeychain
@@ -31,6 +36,17 @@
 
 [fetch]
 	prune = true
+
+[svn]
+	followparent = true
+
+[branch]
+	autosetuprebase = always
+[log]
+	date = relative
+
+[pull]
+	rebase = true
 
 [alias]
 	ci = commit
@@ -81,57 +97,4 @@
 	addTag = "!f() { DEFAULT=$(git default); git co ${1-$DEFAULT} && git up && git tag -a v${1} -m "v${1}" && git tag;}; f"
 	delTag = "!f() { git tag -d v${1} && git push origin :refs/tags/v${1} && git tag;}; f"
 
-[diff]
-	renames = copies
-	indentHeuristic = true
-	tool = Kaleidoscope
-[difftool]
-	prompt = false
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[difftool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-	path =
 
-[svn]
-	followparent = true
-[branch]
-	autosetuprebase = always
-[log]
-	date = relative
-
-[merge]
-	tool = Kaleidoscope
-	conflictstyle = diff3
-	defaultToUpstream = true
-[mergetool]
-	prompt = false
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
-[mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
-
-[color]
-	ui = auto
-[color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
-[color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
-[color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[pull]
-	rebase = true
