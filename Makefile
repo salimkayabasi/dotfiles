@@ -15,7 +15,7 @@ macos: sudo core-macos packages link
 
 linux: core-linux link
 
-core-macos: brew bash git npm
+core-macos: brew bash git npm ruby
 
 core-linux:
 	apt-get update
@@ -52,22 +52,15 @@ unlink: stow-$(OS)
 brew:
 	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
-bash: BASH=/usr/local/bin/zsh
-bash: SHELLS=/private/etc/shells
+bash: BASH=/bin/zsh
 bash: brew
 ifdef GITHUB_ACTION
-	if ! grep -q $(BASH) $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append $(BASH) $(SHELLS) && \
-		sudo chsh -s $(BASH); \
-	fi
+	sudo chsh -s $(BASH);
 else
-	if ! grep -q $(BASH) $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append $(BASH) $(SHELLS) && \
-		chsh -s $(BASH); \
-	fi
+	chsh -s $(BASH);
 endif
+	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	compaudit | xargs chmod g-w,o-w
 
 git: brew
 	brew install git git-extras
@@ -76,14 +69,24 @@ npm:
 	if ! [ -d $(NVM_DIR)/.git ]; then git clone https://github.com/creationix/nvm.git $(NVM_DIR); fi
 	. $(NVM_DIR)/nvm.sh; nvm install --lts
 
+ruby: brew
+	brew install ruby
+
 brew-packages: brew
 	brew bundle --file=$(DOTFILES_DIR)/install/Brewfile
 
 cask-apps: brew
-	brew bundle --file=$(DOTFILES_DIR)/install/Caskfile || true
+	brew bundle --file=$(DOTFILES_DIR)/install/Caskfile
 
 node-packages: npm
 	. $(NVM_DIR)/nvm.sh; npm install -g $(shell cat install/npmfile)
 
 test:
 	. $(NVM_DIR)/nvm.sh; bats test
+
+reset:
+	brew uninstall --ignore-dependencies --force $(brew list --formula)
+	brew uninstall --cask --force $(brew list --cask)
+	brew cleanup --prune-prefix
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
+	rm -rf "$NVM_DIR"
