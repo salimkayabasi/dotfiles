@@ -1,6 +1,5 @@
 SHELL = /bin/bash
 DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-OS := $(shell bin/is-supported bin/is-macos macos linux)
 PATH := $(DOTFILES_DIR)/bin:$(PATH)
 NVM_DIR := $(HOME)/.nvm
 export XDG_CONFIG_HOME = $(HOME)/.config
@@ -9,24 +8,12 @@ export ACCEPT_EULA=Y
 
 .PHONY: test
 
-all: $(OS)
+all: sudo core packages link
 
-macos: sudo core-macos packages link
+core: brew bash git npm ruby
 
-linux: core-linux link
-
-core-macos: brew bash git npm ruby
-
-core-linux:
-	apt-get update
-	apt-get upgrade -y
-	apt-get dist-upgrade -f
-
-stow-macos: brew
+stow: brew
 	is-executable stow || brew install stow
-
-stow-linux: core-linux
-	is-executable stow || apt-get -y install stow
 
 sudo:
 ifndef GITHUB_ACTION
@@ -36,31 +23,32 @@ endif
 
 packages: brew-packages cask-apps node-packages
 
-link: stow-$(OS)
+link: stow
 	for FILE in $$(\ls -A runcom); do if [ -f $(HOME)/$$FILE -a ! -h $(HOME)/$$FILE ]; then \
 		mv -v $(HOME)/$$FILE{,.bak}; fi; done
 	mkdir -p $(XDG_CONFIG_HOME)
 	stow -t $(HOME) runcom
 	stow -t $(XDG_CONFIG_HOME) config
 
-unlink: stow-$(OS)
+unlink: stow
 	stow --delete -t $(HOME) runcom
 	stow --delete -t $(XDG_CONFIG_HOME) config
 	for FILE in $$(\ls -A runcom); do if [ -f $(HOME)/$$FILE.bak ]; then \
 		mv -v $(HOME)/$$FILE.bak $(HOME)/$${FILE%%.bak}; fi; done
 
 brew:
-	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 
-bash: BASH=/bin/zsh
 bash: brew
+	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+	git clone https://github.com/zsh-users/zsh-autosuggestions $${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+	curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
 ifdef GITHUB_ACTION
-	sudo chsh -s $(BASH);
+	sudo chsh -s "$$(which zsh)";
 else
-	chsh -s $(BASH);
+	chsh -s "$$(which zsh)";
 endif
-	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-	compaudit | xargs chmod g-w,o-w
 
 git: brew
 	brew install git git-extras

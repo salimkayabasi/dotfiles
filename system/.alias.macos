@@ -1,7 +1,3 @@
-# Copy pwd to clipboard
-
-alias cpwd="pwd|tr -d '\n'|pbcopy"
-
 # Shortcuts
 
 alias cask="brew cask"
