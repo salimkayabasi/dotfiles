@@ -7,16 +7,9 @@ on:
 
 jobs:
   install:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-
+    runs-on: macos-latest
     steps:
       - name: Clean up installed software
-        if: startsWith(matrix.os, 'macos')
         run: |
           brew uninstall --ignore-dependencies --force $(brew list --formula)
           brew uninstall --cask --force $(brew list --cask)
@@ -26,7 +19,6 @@ jobs:
           rm -rf "$NVM_DIR"
 
       - name: Download and install available system updates
-        if: startsWith(matrix.os, 'macos')
         run: |
           sudo softwareupdate -i -a
 
@@ -34,22 +26,18 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install using Makefile
-        run: |
-          if [ "$RUNNER_OS" == "macOS" ]; then
-            make
-          else
-            sudo make
-          fi
-
-      - name: Verify runcom setup
-        run: source $HOME/.bash_profile
+        run: make
 
       - name: Run tests
-        if: startsWith(matrix.os, 'macos')
-        run: make test
-
-      - name: dotfiles
-        if: startsWith(matrix.os, 'macos')
         run: |
-          bin/dotfiles dock
-          bin/dotfiles macos
+          brew install bats-core
+          make test
+
+#      - name: dotfiles
+#        run: |
+#          which dotfiles
+#          dotfiles dock
+#          dotfiles macos
+#
+#      - name: Verify runcom setup
+#        run: source $HOME/.zshrc

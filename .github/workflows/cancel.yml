@@ -9,7 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
+      - name: Get workflow Ids
+        id: get_ids
+        run: |
+          RESPONSE=$(curl -s --location --request GET \
+          https://api.github.com/repos/${{ github.repository }}/actions/workflows \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}')
+          WORKFLOW_ID=$(echo $RESPONSE | jq -r '.workflows | map(.id) | join(",")')
+          echo "::set-output name=workflow_id::$WORKFLOW_ID"
       - uses: styfle/cancel-workflow-action@0.8.0
         name: Cancel All
         with:
-          workflow_id: 6161299
+          workflow_id: ${{ steps.get_ids.outputs.workflow_id }}

@@ -3,13 +3,10 @@
 These are my dotfiles but forked from https://github.com/webpro/dotfiles
 Take anything you want, but at your own risk.
 
-It mainly targets macOS systems, but it works on at least Ubuntu as well.
-
 ## Highlights
 
 - Minimal efforts to install everything, using a [Makefile](./Makefile)
-- Mostly based around Homebrew, Caskroom and Node.js, latest Bash + GNU Utils
-- Fast and colored prompt
+- Mostly based around Homebrew, Caskroom and Node.js, latest Zsh + GNU Utils
 - Updated macOS defaults
 - Well-organized and easy to customize
 - The installation and runcom setup is
@@ -21,9 +18,9 @@ It mainly targets macOS systems, but it works on at least Ubuntu as well.
 - [Homebrew](https://brew.sh) (packages: [Brewfile](./install/Brewfile))
 - [homebrew-cask](https://github.com/Homebrew/homebrew-cask) (packages: [Caskfile](./install/Caskfile))
 - [Node.js + npm LTS](https://nodejs.org/en/download/) (packages: [npmfile](./install/npmfile))
-- Latest Git, Bash 4, Python 3, GNU coreutils, curl, Ruby
+- Latest Git, GNU coreutils, curl, Ruby
 - [Mackup](https://github.com/lra/mackup) (sync application settings)
-- `$EDITOR` (and Git editor) is [GNU nano](https://www.nano-editor.org)
+- `$EDITOR` (and Git editor) is [Sublime Text](https://www.sublimetext.com/3)
 
 ## Installation
 
@@ -39,7 +36,7 @@ The Xcode Command Line Tools includes `git` and `make` (not available on stock m
 1. Install this repo with `curl` available:
 
 ```bash
-bash -c "`curl -fsSL https://raw.githubusercontent.com/salimkayabasi/dotfiles/main/remote-install.sh`"
+bash -c "`curl -fsSL https://raw.githubusercontent.com/salimkayabasi/dotfiles/HEAD/remote-install.sh`"
 ```
 
 This will clone or download, this repo to `~/.dotfiles` depending on the availability of `git`, `curl` or `wget`.
@@ -66,7 +63,7 @@ The installation process in the Makefile is tested on every push and every week 
 - `dotfiles dock` (set [Dock items](./macos/dock.sh))
 - `dotfiles macos` (set [macOS defaults](./macos/defaults.sh))
 - Mackup
-  - Log in to Dropbox (and wait until synced)
+  - Log in to Google Drive (and wait until synced)
   - `ln -s ~/.config/mackup/.mackup.cfg ~` (until [#632](https://github.com/lra/mackup/pull/632) is fixed)
   - `mackup restore`
 
@@ -79,7 +76,7 @@ Usage: dotfiles <command>
 Commands:
     clean            Clean up caches (brew, npm, gem, rvm)
     dock             Apply macOS Dock settings
-    edit             Open dotfiles in IDE (code) and Git GUI (stree)
+    edit             Open dotfiles in IDE (vscode)
     help             This help message
     macos            Apply macOS system defaults
     test             Run tests
@@ -96,11 +93,11 @@ Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`.
 
 ## Additional Resources
 
-- [Awesome Dotfiles](https://github.com/salimkayabasi/awesome-dotfiles)
+- [WebPro Dotfiles](https://github.com/webpro/dotfiles)
+- [Awesome Dotfiles](https://github.com/webpro/awesome-dotfiles)
 - [Homebrew](https://brew.sh)
 - [Homebrew Cask](https://github.com/Homebrew/homebrew-cask)
 - [Bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
-- [Solarized Color Theme for GNU ls](https://github.com/seebi/dircolors-solarized)
 
 ## Credits
 

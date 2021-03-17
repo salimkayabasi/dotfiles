@@ -19,23 +19,23 @@ fi
 
 # Make utilities available
 
-PATH="$DOTFILES_DIR/bin:$PATH"
+export PATH="$DOTFILES_DIR/bin:$PATH"
 
 # Source the dotfiles (order matters)
 
-for DOTFILE in "$DOTFILES_DIR"/system/.{function,function_*,path,env,alias,grep,prompt,nvm,completion,fix,custom}; do
+for DOTFILE in "$DOTFILES_DIR"/system/.{function,path,env,alias,grep,prompt,nvm,completion,fix,custom}; do
   [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
 
 if is-macos; then
-  for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias,path}.macos; do
+  for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias,function,path}.macos; do
     [ -f "$DOTFILE" ] && . "$DOTFILE"
   done
 fi
 
 # Hook for extra/custom stuff
 
-DOTFILES_EXTRA_DIR="$HOME/.extra"
+export DOTFILES_EXTRA_DIR="$HOME/.extra"
 
 if [ -d "$DOTFILES_EXTRA_DIR" ]; then
   for EXTRAFILE in "$DOTFILES_EXTRA_DIR"/runcom/*.sh; do
