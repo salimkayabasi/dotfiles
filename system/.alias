@@ -8,3 +8,6 @@ alias reload=". ~/.zshrc"
 
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="code ~/.oh-my-zsh"
+
+alias npmkill="find . -name "node_modules" -type d -prune | xargs du -chs"
+alias npmkillme="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +"

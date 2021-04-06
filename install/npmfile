@@ -5,5 +5,4 @@ npm-check
 npm-check-updates
 sort-package-json
 spot
-npkill
 @stoplight/spectral
