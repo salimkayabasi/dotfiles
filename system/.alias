@@ -11,3 +11,6 @@ alias ohmyzsh="code ~/.oh-my-zsh"
 
 alias npmkill="find . -name "node_modules" -type d -prune | xargs du -chs"
 alias npmkillme="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +"
+
+alias dosfix="find . -type f -print0 | xargs -0 dos2unix"
+alias aztoken="az account get-access-token | jq -r '.accessToken' | pbcopy && echo 'Token has been copied'"
